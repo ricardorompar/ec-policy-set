@@ -1,0 +1,24 @@
+
+allInstances = plan.find_resources("vsphere_virtual_machine")
+
+workspace_name = tfrun.workspace.name
+
+# Determine limit for current workspace
+if workspace_name matches "(.*)-dev-(.*)$" {
+    allowed_sizes = ["small", "medium", "large"]
+} else{
+    allowed_sizes = ["small", "medium", "large", "xlarge", "2xlarge", "3xlarge", "4xlarge"]
+}
+
+# Filter to instances with violations
+# Warnings will be printed for all violations since the last parameter is true
+violatingInstances = plan.filter_attribute_not_in_list(allInstances,
+                        "size", allowed_types, true)
+
+# Count violations
+violations = length(violatingInstances["messages"])
+
+# Main rule
+main = rule {
+  violations is 0
+}
