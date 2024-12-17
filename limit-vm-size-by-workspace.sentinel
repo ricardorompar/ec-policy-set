@@ -1,5 +1,6 @@
 # with alias "plan"
 import "tfplan-functions" as plan
+import "tfrun"
 
 allInstances = plan.find_resources("vsphere_virtual_machine")
 
