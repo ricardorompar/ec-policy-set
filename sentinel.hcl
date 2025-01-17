@@ -5,3 +5,7 @@ module "tfplan-functions" {
 policy "limit-vm-size-by-workspace" {
     enforcement_level = "hard-mandatory"
 }
+
+policy "workspace-tags" {
+    enforcement_level = "soft-mandatory"
+}
