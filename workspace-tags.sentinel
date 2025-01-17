@@ -1,0 +1,18 @@
+# with alias "plan"
+import "tfplan-functions" as plan
+import "tfrun"
+
+allWorkspaces = plan.find_resources("tfe_workspace")
+
+# Filter to workspaces without tags (tag_names == null)
+# Warnings will be printed for all violations since the last parameter is true
+violatingWorkspaces = plan.filter_attribute_is_value(allWorkspaces,
+                        "tag_names", null, true)
+
+# Count violations
+violations = length(violatingWorkspaces["messages"])
+
+# Main rule
+main = rule {
+  violations is 0
+}
